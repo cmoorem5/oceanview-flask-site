@@ -1,14 +1,20 @@
 [
   {
     "name": "Hooked on Islamorada",
+    "slug": "hooked-on-islamorada",
     "location": "Islamorada, Florida",
     "description": "Oceanfront luxury condo with private dock and pool.",
-    "image": "https://via.placeholder.com/400x250?text=Islamorada"
+    "image": "/static/images/islamorada.jpg",
+    "price": "$625/night",
+    "amenities": ["Private Dock", "Oceanfront", "Pool", "Wi-Fi"]
   },
   {
     "name": "Standish Lakehouse",
+    "slug": "standish-lakehouse",
     "location": "Standish, Maine",
     "description": "Cozy lakefront retreat with firepit and outdoor deck.",
-    "image": "https://via.placeholder.com/400x250?text=Standish"
+    "image": "/static/images/standish.jpg",
+    "price": "$350/night",
+    "amenities": ["Lake Access", "Firepit", "Deck", "Wi-Fi"]
   }
 ]
