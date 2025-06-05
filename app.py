@@ -4,14 +4,15 @@ import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables from .env file
 load_dotenv()
 
 EMAIL_ADDRESS = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(24)  # Used for flash messaging
 
 # 📬 Email sending helper
 def send_email(subject, body, to_email):
@@ -25,13 +26,13 @@ def send_email(subject, body, to_email):
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
-        return True
 
+        return True
     except Exception as e:
         print(f"[Email Error] {e}")
         return False
 
-# 🌐 Routes
+# 🔸 ROUTES
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -42,27 +43,17 @@ def properties():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    errors = {}
-
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         email = request.form.get("email", "").strip()
         phone = request.form.get("phone", "").strip()
         message = request.form.get("message", "").strip()
 
-        # Basic validation
-        if not name:
-            errors["name"] = "Name is required."
-        if not email:
-            errors["email"] = "Email is required."
-        if not message:
-            errors["message"] = "Message is required."
+        # ✅ Server-side validation
+        if not name or not email or not message:
+            flash("Name, email, and message are required.", "danger")
+            return redirect("/contact")
 
-        if errors:
-            flash("Please correct the errors below and try again.", "danger")
-            return render_template("contact.html", errors=errors, request=request)
-
-        # Compose email message
         full_message = (
             f"New contact form submission:\n\n"
             f"Name: {name}\n"
@@ -73,11 +64,13 @@ def contact():
 
         if send_email(f"New Inquiry from {name}", full_message, EMAIL_ADDRESS):
             flash("Your message has been sent successfully!", "success")
-            return redirect("/contact")
         else:
             flash("There was an error sending your message. Please try again.", "danger")
 
-    return render_template("contact.html", errors=errors)
-    
+        return redirect("/contact")
+
+    return render_template("contact.html")
+
+# 🔁 Run the app
 if __name__ == "__main__":
     app.run(debug=True)
