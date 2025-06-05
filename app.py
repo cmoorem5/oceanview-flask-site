@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 load_dotenv()
 EMAIL_ADDRESS = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
+SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.office365.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
 
 # ──────────────────────────────────────────────────────────────
 # Initialize Flask app
@@ -20,7 +22,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # ──────────────────────────────────────────────────────────────
-# Helper: Send email with debug output
+# Helper: Send email (Outlook-compatible)
 # ──────────────────────────────────────────────────────────────
 def send_email(subject, body, to_email):
     try:
@@ -30,7 +32,8 @@ def send_email(subject, body, to_email):
         msg["From"] = EMAIL_ADDRESS
         msg["To"] = to_email
 
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as smtp:
+            smtp.starttls()
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
 
