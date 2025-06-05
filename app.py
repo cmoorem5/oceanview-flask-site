@@ -80,6 +80,20 @@ def property_detail(slug):
     return render_template("property_detail.html", property=property_match, now=datetime.now())
 
 # ──────────────────────────────────────────────────────────────
+# Route: Availability Calendar (global view)
+# ──────────────────────────────────────────────────────────────
+@app.route("/calendar")
+def calendar():
+    try:
+        with open("content/calendar_data.json", "r") as f:
+            calendar_data = json.load(f)
+    except Exception as e:
+        print(f"[Calendar Load Error] {e}")
+        calendar_data = {}
+
+    return render_template("calendar.html", bookings=calendar_data, now=datetime.now())
+
+# ──────────────────────────────────────────────────────────────
 # Route: Contact Form (GET + POST)
 # ──────────────────────────────────────────────────────────────
 @app.route("/contact", methods=["GET", "POST"])
@@ -90,12 +104,10 @@ def contact():
         phone = request.form.get("phone", "").strip()
         message = request.form.get("message", "").strip()
 
-        # Validate required fields
         if not name or not email or not message:
             flash("Name, email, and message are required.", "danger")
             return redirect("/contact")
 
-        # Compose email message
         full_message = (
             f"New contact form submission:\n\n"
             f"Name: {name}\n"
@@ -104,7 +116,6 @@ def contact():
             f"Message:\n{message}"
         )
 
-        # Attempt to send email
         if send_email(f"New Inquiry from {name}", full_message, EMAIL_ADDRESS):
             flash("Your message has been sent successfully!", "success")
         else:
