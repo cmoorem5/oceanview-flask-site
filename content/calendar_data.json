@@ -1,0 +1,171 @@
+{
+  "hooked-on-islamorada": [
+    {
+      "start": "2025-02-08",
+      "end": "2025-02-14",
+      "summary": "Blocked"
+    },
+    {
+      "start": "2025-02-22",
+      "end": "2025-03-02",
+      "summary": "Reserved - Herb"
+    },
+    {
+      "start": "2025-03-16",
+      "end": "2025-03-21",
+      "summary": "Blocked"
+    },
+    {
+      "start": "2025-04-07",
+      "end": "2025-04-13",
+      "summary": "Blocked"
+    },
+    {
+      "start": "2025-04-17",
+      "end": "2025-04-22",
+      "summary": "Reserved - Nevada"
+    },
+    {
+      "start": "2025-05-25",
+      "end": "2025-05-31",
+      "summary": "Reserved - Randi"
+    },
+    {
+      "start": "2025-06-01",
+      "end": "2025-06-07",
+      "summary": "Reserved - Jeffrey"
+    },
+    {
+      "start": "2025-06-08",
+      "end": "2025-06-21",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-06-21",
+      "end": "2025-06-26",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-06-29",
+      "end": "2025-07-06",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-07-06",
+      "end": "2025-07-12",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-07-26",
+      "end": "2025-08-02",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-08-02",
+      "end": "2025-08-09",
+      "summary": "Reserved - shannon"
+    },
+    {
+      "start": "2025-11-23",
+      "end": "2025-11-29",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-12-27",
+      "end": "2026-01-03",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2026-01-31",
+      "end": "2026-02-07",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2026-03-04",
+      "end": "2026-04-12",
+      "summary": "Airbnb (Not available)"
+    }
+  ],
+  "standish-lakehouse": [
+    {
+      "start": "2025-04-23",
+      "end": "2025-05-12",
+      "summary": "Blocked"
+    },
+    {
+      "start": "2025-06-03",
+      "end": "2025-06-16",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-06-19",
+      "end": "2025-06-24",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-06-24",
+      "end": "2025-06-29",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-07-03",
+      "end": "2025-07-07",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-07-11",
+      "end": "2025-07-15",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-07-21",
+      "end": "2025-07-26",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-07-26",
+      "end": "2025-07-31",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-07-31",
+      "end": "2025-08-03",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-08-03",
+      "end": "2025-08-07",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-08-08",
+      "end": "2025-08-09",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-08-10",
+      "end": "2025-08-12",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-08-14",
+      "end": "2025-08-19",
+      "summary": "Reserved"
+    },
+    {
+      "start": "2025-08-29",
+      "end": "2025-09-02",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-11-01",
+      "end": "2026-04-16",
+      "summary": "Airbnb (Not available)"
+    },
+    {
+      "start": "2025-11-02",
+      "end": "2028-01-01",
+      "summary": "Blocked"
+    }
+  ]
+}
