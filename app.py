@@ -47,7 +47,21 @@ def index():
     return render_template("index.html", now=datetime.now())
 
 # ──────────────────────────────────────────────────────────────
-# Route: Properties Page (load JSON)
+# Route: Property Listings (card view)
+# ──────────────────────────────────────────────────────────────
+@app.route("/properties")
+def properties():
+    try:
+        with open("content/properties.json", "r") as f:
+            properties_data = json.load(f)
+    except Exception as e:
+        print(f"[Property Load Error] {e}")
+        properties_data = []
+
+    return render_template("properties.html", properties=properties_data, now=datetime.now())
+
+# ──────────────────────────────────────────────────────────────
+# Route: Individual Property Detail
 # ──────────────────────────────────────────────────────────────
 @app.route("/property/<slug>")
 def property_detail(slug):
@@ -64,6 +78,7 @@ def property_detail(slug):
         return redirect("/properties")
 
     return render_template("property_detail.html", property=property_match, now=datetime.now())
+
 # ──────────────────────────────────────────────────────────────
 # Route: Contact Form (GET + POST)
 # ──────────────────────────────────────────────────────────────
