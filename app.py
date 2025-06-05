@@ -13,6 +13,25 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+# 🔹 Email sending helper function
+def send_email(subject, body, to_email):
+    try:
+        msg = EmailMessage()
+        msg.set_content(body)
+        msg["Subject"] = subject
+        msg["From"] = EMAIL_ADDRESS
+        msg["To"] = to_email
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.send_message(msg)
+        return True
+
+    except Exception as e:
+        print(f"[Email Error] {e}")
+        return False
+
+# 🔸 Routes
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -37,24 +56,12 @@ def contact():
             f"Message:\n{message}"
         )
 
-        try:
-            msg = EmailMessage()
-            msg.set_content(full_message)
-            msg["Subject"] = f"New Inquiry from {name}"
-            msg["From"] = EMAIL_ADDRESS
-            msg["To"] = EMAIL_ADDRESS  # Or use a separate destination if preferred
-
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-                smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                smtp.send_message(msg)
-
+        if send_email(f"New Inquiry from {name}", full_message, EMAIL_ADDRESS):
             flash("Your message has been sent successfully!", "success")
-            return redirect("/contact")
-
-        except Exception as e:
+        else:
             flash("There was an error sending your message. Please try again.", "danger")
-            print(f"Error: {e}")
-            return redirect("/contact")
+
+        return redirect("/contact")
 
     return render_template("contact.html")
 
