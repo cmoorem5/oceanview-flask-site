@@ -17,10 +17,10 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 # Initialize Flask app
 # ──────────────────────────────────────────────────────────────
 app = Flask(__name__)
-app.secret_key = os.urandom(24)  # Required for flash messages
+app.secret_key = os.urandom(24)
 
 # ──────────────────────────────────────────────────────────────
-# Helper: Send email
+# Helper: Send email with debug output
 # ──────────────────────────────────────────────────────────────
 def send_email(subject, body, to_email):
     try:
@@ -40,15 +40,13 @@ def send_email(subject, body, to_email):
         return False
 
 # ──────────────────────────────────────────────────────────────
-# Route: Homepage
+# Routes
 # ──────────────────────────────────────────────────────────────
+
 @app.route("/")
 def index():
     return render_template("index.html", now=datetime.now())
 
-# ──────────────────────────────────────────────────────────────
-# Route: Property Listings (card view)
-# ──────────────────────────────────────────────────────────────
 @app.route("/properties")
 def properties():
     try:
@@ -57,12 +55,8 @@ def properties():
     except Exception as e:
         print(f"[Property Load Error] {e}")
         properties_data = []
-
     return render_template("properties.html", properties=properties_data, now=datetime.now())
 
-# ──────────────────────────────────────────────────────────────
-# Route: Individual Property Detail
-# ──────────────────────────────────────────────────────────────
 @app.route("/property/<slug>")
 def property_detail(slug):
     try:
@@ -79,9 +73,6 @@ def property_detail(slug):
 
     return render_template("property_detail.html", property=property_match, now=datetime.now())
 
-# ──────────────────────────────────────────────────────────────
-# Route: Availability Calendar (global view)
-# ──────────────────────────────────────────────────────────────
 @app.route("/calendar")
 def calendar():
     try:
@@ -93,9 +84,30 @@ def calendar():
 
     return render_template("calendar.html", bookings=calendar_data, now=datetime.now())
 
-# ──────────────────────────────────────────────────────────────
-# Route: Contact Form (GET + POST)
-# ──────────────────────────────────────────────────────────────
+@app.route("/calendar/<slug>")
+def calendar_by_property(slug):
+    try:
+        with open("content/properties.json", "r") as f:
+            properties = json.load(f)
+        property_match = next((p for p in properties if p["slug"] == slug), None)
+    except Exception as e:
+        print(f"[Property Lookup Error] {e}")
+        property_match = None
+
+    try:
+        with open("content/calendar_data.json", "r") as f:
+            all_data = json.load(f)
+            bookings = all_data.get(slug, [])
+    except Exception as e:
+        print(f"[Calendar Load Error] {e}")
+        bookings = []
+
+    if not property_match:
+        flash("Property not found for calendar view.", "danger")
+        return redirect("/calendar")
+
+    return render_template("calendar_property.html", property=property_match, bookings=bookings, now=datetime.now())
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
@@ -124,6 +136,31 @@ def contact():
         return redirect("/contact")
 
     return render_template("contact.html", now=datetime.now())
+
+@app.route("/inquire", methods=["POST"])
+def inquire():
+    name = request.form.get("name", "").strip()
+    email = request.form.get("email", "").strip()
+    message = request.form.get("message", "").strip()
+    property_name = request.form.get("property", "Unknown Property")
+
+    if not name or not email or not message:
+        flash("Name, email, and message are required.", "danger")
+        return redirect(request.referrer or "/properties")
+
+    full_message = (
+        f"New inquiry for: {property_name}\n\n"
+        f"Name: {name}\n"
+        f"Email: {email}\n"
+        f"Message:\n{message}"
+    )
+
+    if send_email(f"Inquiry for {property_name} from {name}", full_message, EMAIL_ADDRESS):
+        flash("Your inquiry has been sent!", "success")
+    else:
+        flash("There was an error sending your inquiry. Please try again.", "danger")
+
+    return redirect(request.referrer or "/properties")
 
 # ──────────────────────────────────────────────────────────────
 # Run the app
