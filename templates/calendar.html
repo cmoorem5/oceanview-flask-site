@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Availability Calendar{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="mb-4 text-center">Booking Calendar</h2>
+
+  {% for property, entries in bookings.items() %}
+    <div class="mb-5">
+      <h4>{{ property }}</h4>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Start</th>
+            <th>End</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in entries %}
+            <tr>
+              <td>{{ b.start }}</td>
+              <td>{{ b.end }}</td>
+              <td>{{ b.source }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
