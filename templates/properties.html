@@ -1,17 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Properties - Oceanview Property Partners{% endblock %}
+{% block title %}Our Properties{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-  <h2 class="mb-4">Our Properties</h2>
-  <ul class="list-group">
-    <li class="list-group-item">
-      <strong>Islamorada Retreat</strong><br>
-      Beachfront condo with private dock, pool, and sunrise views.
-    </li>
-    <li class="list-group-item">
-      <strong>Standish Lake House</strong><br>
-      Lakefront home with fire pit, deck, and rustic charm.
-    </li>
-  </ul>
+<div class="container my-5">
+  <h2 class="mb-4 text-center">Our Featured Properties</h2>
+  <div class="row">
+    {% for property in properties %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+          <img src="{{ property.image }}" class="card-img-top" alt="{{ property.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ property.name }}</h5>
+            <p class="card-text">{{ property.description }}</p>
+            <p class="text-muted">{{ property.location }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

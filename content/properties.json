@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Hooked on Islamorada",
+    "location": "Islamorada, Florida",
+    "description": "Oceanfront luxury condo with private dock and pool.",
+    "image": "https://via.placeholder.com/400x250?text=Islamorada"
+  },
+  {
+    "name": "Standish Lakehouse",
+    "location": "Standish, Maine",
+    "description": "Cozy lakefront retreat with firepit and outdoor deck.",
+    "image": "https://via.placeholder.com/400x250?text=Standish"
+  }
+]

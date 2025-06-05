@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash
 import os
 import smtplib
+import json
 from email.message import EmailMessage
 from dotenv import load_dotenv
 
@@ -39,7 +40,13 @@ def index():
 
 @app.route("/properties")
 def properties():
-    return render_template("properties.html")
+    try:
+        with open("content/properties.json", "r") as f:
+            property_data = json.load(f)
+    except Exception as e:
+        print(f"[Property Load Error] {e}")
+        property_data = []
+    return render_template("properties.html", properties=property_data)
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
