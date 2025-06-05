@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Oceanview Property Partners</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    >
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Oceanview</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/properties">Properties</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <header class="bg-light py-5 text-center">
-        <div class="container">
-            <h1 class="display-4">Welcome to Oceanview Property Partners</h1>
-            <p class="lead">Luxury coastal rentals — Islamorada & Standish</p>
-        </div>
-    </header>
-
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p class="mb-0">&copy; 2025 Oceanview Property Partners</p>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    ></script>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Home - Oceanview Property Partners{% endblock %}
+{% block content %}
+<header class="bg-light py-5 text-center">
+    <div class="container">
+        <h1 class="display-4">Welcome to Oceanview Property Partners</h1>
+        <p class="lead">Luxury coastal rentals — Islamorada & Standish</p>
+    </div>
+</header>
+{% endblock %}

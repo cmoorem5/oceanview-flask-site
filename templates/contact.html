@@ -1,61 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Contact Us - Oceanview Property Partners</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-    }
-    .success { color: green; }
-    .danger { color: red; }
-    label { font-weight: bold; }
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <h1>Contact Us</h1>
+{% extends "base.html" %}
+{% block title %}Contact Us - Oceanview Property Partners{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2>Contact Us</h2>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul>
-        {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+  <form method="POST" action="/contact" class="mt-4">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" id="name" name="name" class="form-control" required>
+    </div>
 
-  <form method="POST" action="/contact" novalidate>
-    <label for="name">Name: *</label>
-    <input type="text" id="name" name="name" required>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+    </div>
 
-    <label for="email">Email: *</label>
-    <input type="email" id="email" name="email" required>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input type="tel" id="phone" name="phone" class="form-control">
+    </div>
 
-    <label for="phone">Phone:</label>
-    <input type="tel" id="phone" name="phone" pattern="[0-9+\-\s()]*">
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+    </div>
 
-    <label for="message">Message: *</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
-
-    <button type="submit">Send Message</button>
+    <button type="submit" class="btn btn-primary">Send Message</button>
   </form>
-
-  <br>
-  <a href="/">Back to Home</a>
-</body>
-</html>
+</div>
+{% endblock %}
