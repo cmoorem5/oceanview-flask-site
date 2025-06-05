@@ -20,11 +20,38 @@
           {% for amenity in property.amenities %}
             <li class="list-inline-item badge bg-secondary me-1 mb-1">{{ amenity }}</li>
           {% endfor %}
-        </ul>
-      {% endif %}
+     </ul>
+{% endif %}
+</div>
+</div>
 
-      <a href="/contact" class="btn btn-outline-primary mt-4">Inquire About This Property</a>
-    </div>
+<hr class="my-5">
+
+<div class="row">
+  <div class="col-md-8">
+    <h4 class="mb-4">Inquire About This Property</h4>
+    <form method="POST" action="/inquire" novalidate>
+      <input type="hidden" name="property" value="{{ property.name }}">
+
+      <div class="mb-3">
+        <label for="inquiryName" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="inquiryName" name="name" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="inquiryEmail" class="form-label">Your Email</label>
+        <input type="email" class="form-control" id="inquiryEmail" name="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="inquiryMessage" class="form-label">Message</label>
+        <textarea class="form-control" id="inquiryMessage" name="message" rows="4" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Send Inquiry</button>
+    </form>
   </div>
 </div>
+</div>
 {% endblock %}
+
