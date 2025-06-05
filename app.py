@@ -13,7 +13,7 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# 🔹 Email sending helper function
+# 📬 Email sending helper
 def send_email(subject, body, to_email):
     try:
         msg = EmailMessage()
@@ -31,7 +31,7 @@ def send_email(subject, body, to_email):
         print(f"[Email Error] {e}")
         return False
 
-# 🔸 Routes
+# 🌐 Routes
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -42,12 +42,27 @@ def properties():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        phone = request.form.get("phone", "")
-        message = request.form["message"]
+    errors = {}
 
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip()
+        phone = request.form.get("phone", "").strip()
+        message = request.form.get("message", "").strip()
+
+        # Basic validation
+        if not name:
+            errors["name"] = "Name is required."
+        if not email:
+            errors["email"] = "Email is required."
+        if not message:
+            errors["message"] = "Message is required."
+
+        if errors:
+            flash("Please correct the errors below and try again.", "danger")
+            return render_template("contact.html", errors=errors, request=request)
+
+        # Compose email message
         full_message = (
             f"New contact form submission:\n\n"
             f"Name: {name}\n"
@@ -58,12 +73,11 @@ def contact():
 
         if send_email(f"New Inquiry from {name}", full_message, EMAIL_ADDRESS):
             flash("Your message has been sent successfully!", "success")
+            return redirect("/contact")
         else:
             flash("There was an error sending your message. Please try again.", "danger")
 
-        return redirect("/contact")
-
-    return render_template("contact.html")
-
+    return render_template("contact.html", errors=errors)
+    
 if __name__ == "__main__":
     app.run(debug=True)

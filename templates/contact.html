@@ -18,17 +18,38 @@
   {% endwith %}
 
   <form method="POST" action="/contact">
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" required><br><br>
+    <div>
+      <label for="name">Name *</label><br>
+      <input type="text" id="name" name="name" value="{{ request.form.name or '' }}">
+      {% if errors and errors.name %}
+        <p style="color:red;">{{ errors.name }}</p>
+      {% endif %}
+    </div>
+    <br>
 
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
+    <div>
+      <label for="email">Email *</label><br>
+      <input type="email" id="email" name="email" value="{{ request.form.email or '' }}">
+      {% if errors and errors.email %}
+        <p style="color:red;">{{ errors.email }}</p>
+      {% endif %}
+    </div>
+    <br>
 
-    <label for="phone">Phone:</label><br>
-    <input type="tel" id="phone" name="phone"><br><br>
+    <div>
+      <label for="phone">Phone</label><br>
+      <input type="tel" id="phone" name="phone" value="{{ request.form.phone or '' }}">
+    </div>
+    <br>
 
-    <label for="message">Message:</label><br>
-    <textarea id="message" name="message" rows="5" required></textarea><br><br>
+    <div>
+      <label for="message">Message *</label><br>
+      <textarea id="message" name="message" rows="5">{{ request.form.message or '' }}</textarea>
+      {% if errors and errors.message %}
+        <p style="color:red;">{{ errors.message }}</p>
+      {% endif %}
+    </div>
+    <br>
 
     <button type="submit">Send Message</button>
   </form>
